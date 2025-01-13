@@ -13,4 +13,4 @@ def _get_filme():
                 lista_filmes.append(i[:-1])
             # print(regex)
         # print(string)
-    return print(f"Filme da vez: {random.choice(lista_filmes)}")
+    return f"Filme da vez: {random.choice(lista_filmes)}"
