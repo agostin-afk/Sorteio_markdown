@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import * #type: ignore
+from PyQt5.QtGui import * #type: ignore
+from PyQt5.QtWidgets import * #type: ignore
 import exec_random_list
 
 class MainWindow(QMainWindow):
