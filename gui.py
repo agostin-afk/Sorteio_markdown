@@ -23,18 +23,19 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
 
         # Botão
-        button = QPushButton("Aperte-me")
-        button.clicked.connect(self.get_filme)
-        button.setFixedSize(200, 80)
+        self.button = QPushButton("Aperte-me", self)
+        self.button.clicked.connect(self.get_filme)
+        self.button.setFixedSize(150, 80)
 
         # Adiciona widgets ao layout
-        layout.addWidget(button, 1, 0)
+        layout.addWidget(self.button, 1, 0)
         layout.addWidget(self.textEdit, 0, 0)
 
     def get_filme(self):
         # Atualiza o texto do QTextEdit
         novo_texto = exec_random_list._get_filme()  # Obtenha o texto da função
         self.textEdit.setText(novo_texto)  # Atualiza o QTextEdit
+        self.button.setText("Novo Sorteio")
 
 
 # Executa a aplicação
