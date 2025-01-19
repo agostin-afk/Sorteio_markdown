@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
 
         # Texto
         self.textEdit = QTextEdit("Qual é o filme de hoje...")
-        self.textEdit.setFixedSize(400, 50)
+        self.textEdit.setFixedSize(400, 60)
         self.textEdit.setReadOnly(True)
 
         # Widget central para usar layouts
@@ -23,20 +23,40 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
 
         # Botão
-        self.button = QPushButton("Aperte-me", self)
+        self.button = QPushButton("Sorteio", self)
         self.button.clicked.connect(self.get_filme)
         self.button.setFixedSize(150, 80)
+        self.button_assistir = QPushButton("Selecionar filme", self)
+        self.button_assistir.clicked.connect(self.set_filme)
+        self.button_assistir.setFixedSize(150, 80)
+        self.button_assistiu = QPushButton("Já assisti", self)
+        self.button_assistiu.clicked.connect(self.remove_filme)
+        self.button_assistiu.setFixedSize(150, 80)
 
         # Adiciona widgets ao layout
-        layout.addWidget(self.button, 1, 0)
-        layout.addWidget(self.textEdit, 0, 0)
+        layout.addWidget(self.textEdit, 0, 1, 1, 3)  
+        layout.addWidget(self.button, 1, 0)          
+        layout.addWidget(self.button_assistir, 1, 2) 
+        layout.addWidget(self.button_assistiu, 1, 4) 
+
+        layout.setColumnStretch(0, 1) 
+        # layout.setColumnStretch(1, 1)
+        # layout.setColumnStretch(3, 1)
+        layout.setColumnStretch(4, 1)  
 
     def get_filme(self):
         # Atualiza o texto do QTextEdit
-        novo_texto = exec_random_list._get_filme(caminho)  # Obtenha o texto da função
+        novo_texto = exec_random_list.test.main()  # Obtenha o texto da função
         self.textEdit.setText(novo_texto)  # Atualiza o QTextEdit
         self.button.setText("Novo Sorteio")
-
+    def set_filme(self):
+        exec_random_list.test.save_filme() 
+        aviso = f"filme selecionado: {exec_random_list.test.get_filme()}"
+        self.textEdit.setText(aviso)
+    def remove_filme(self):
+        exec_random_list.test.remove_filme()
+        aviso = f"Selecione um novo filme para assistir!"
+        self.textEdit.setText(aviso)
 
 # Executa a aplicação
 app = QApplication(sys.argv)

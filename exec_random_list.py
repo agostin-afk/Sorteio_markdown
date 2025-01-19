@@ -13,32 +13,30 @@ class Filme():
                 if re.findall(r'\[ \]', linha) == ['[ ]']:
                     self.lista_filme.append(linha.strip())
     def set_filme(self):
+        self.get_lista()
         if self.lista_filme:
             self.filme = random.choice(self.lista_filme)
         else:
             return "Nenhum filme encontrado na lista."
         return self.filme
-    def save_filme(self, filme):
+    def save_filme(self):
         with open("filme_da_vez.txt", "w+", encoding="utf-8") as file:
             file.write(self.filme)
     def get_filme(self):
         with open("filme_da_vez.txt", "r+", encoding="utf-8") as file:
             self.filme = file.read()
-            return self.filme 
-    def last_filme(self,):
+            return f"{re.sub(r'^\d{1,3}\.\s\[ \]\s', '', self.filme)}"
+    def remove_filme(self):
+        with open("filme_da_vez.txt", "w+", encoding='utf-8') as file:
+            file.truncate(0)
+    def main(self,):
         with open("filme_da_vez.txt", "r+", encoding="utf-8") as file:
             if bool(file.read()):
                 self.get_filme()
-                return f"Assista o ultmo filme da lista: \n{self.filme}"
-                pass
+                return f"Assista o ultmo filme da lista: \n{re.sub(r'^\d{1,3}\.\s\[ \]\s', '', self.filme)}"
             else:
                 self.set_filme()
-                self.get_lista()
-                self.save_filme(self,)
-                return f"O filme da vez:\n{self.filme}"
+                return f"O filme da vez:\n{re.sub(r'^\d{1,3}\.\s\[ \]\s', '', self.filme)}"
+
 
 test = Filme()
-test.last_filme()
-resultado = test.last_filme()
-
-print(resultado)
