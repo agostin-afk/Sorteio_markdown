@@ -3,7 +3,7 @@ from PyQt5.QtCore import * #type: ignore
 from PyQt5.QtGui import * #type: ignore
 from PyQt5.QtWidgets import * #type: ignore
 import exec_random_list
-
+caminho = "C:\\Users\\agost\\OneDrive\\Documentos\\Obsidian Vault\\Filmes - insta_1.md"
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -33,7 +33,7 @@ class MainWindow(QMainWindow):
 
     def get_filme(self):
         # Atualiza o texto do QTextEdit
-        novo_texto = exec_random_list._get_filme()  # Obtenha o texto da função
+        novo_texto = exec_random_list._get_filme(caminho)  # Obtenha o texto da função
         self.textEdit.setText(novo_texto)  # Atualiza o QTextEdit
         self.button.setText("Novo Sorteio")
 
