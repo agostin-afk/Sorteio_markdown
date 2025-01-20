@@ -2,7 +2,8 @@ import sys
 from PyQt5.QtWidgets import *  # type: ignore
 import exec_random_list
 
-caminho = "C:\\Users\\agost\\OneDrive\\Documentos\\Obsidian Vault\\Filmes - insta_1.md"
+film = exec_random_list.Filme()
+caminho = film.caminho
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -99,7 +100,7 @@ class MainWindow(QMainWindow):
 
     def get_filme(self):
         try:
-            novo_texto = exec_random_list.test.main()  # Obtenha o texto da função
+            novo_texto = film.main()  # Obtenha o texto da função
             self.textEdit.setText(novo_texto)  # Atualiza o QTextEdit
             self.button.setText("Novo Sorteio")
         except Exception as e:
@@ -107,15 +108,15 @@ class MainWindow(QMainWindow):
 
     def set_filme(self):
         try:
-            exec_random_list.test.save_filme() 
-            aviso = f"Filme selecionado: {exec_random_list.test.get_filme()}"
+            film.save_filme() 
+            aviso = f"Filme selecionado: {film.get_filme()}"
             self.textEdit.setText(aviso)
         except Exception as e:
             self.textEdit.setText(f"Erro ao selecionar o filme: {str(e)}")
 
     def remove_filme(self):
         try:
-            exec_random_list.test.remove_filme()
+            film.remove_filme()
             aviso = f"Selecione um novo filme para assistir!"
             self.textEdit.setText(aviso)
             self.button.setText("Novo Sorteio")

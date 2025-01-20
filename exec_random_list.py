@@ -3,10 +3,10 @@ import re
 
 class Filme:
     def __init__(self):
-        self.caminho = "C:\\Users\\agost\\OneDrive\\Documentos\\Obsidian Vault\\Filmes - insta_1.md"
+        self.caminho = "C:\\Users\\agost\\OneDrive\\Documentos\\Obsidian Vault\\lista_filme_prog.md"
         self.filme = ""
         self.lista_filme = []
-        self.ultimo_filme = ""  # Corrigido para string vazia
+        self.ultimo_filme = ""
 
     def get_lista(self):
         """Lê a lista de filmes do arquivo e filtra apenas os não assistidos."""
@@ -54,10 +54,34 @@ class Filme:
         """Remove o filme atualmente salvo."""
         try:
             with open("filme_da_vez.txt", "w", encoding="utf-8") as file:
-                file.write("")  # Esvazia o conteúdo do arquivo
+                self.check()
+                file.write("")
         except Exception as e:
             return f"Erro ao remover o filme: {str(e)}"
-
+    def check(self):
+        """Procura pelo filme e substitui '[ ]' por '[x]' na mesma linha."""
+        try:
+            with open(self.caminho, 'r+', encoding='utf-8') as file:
+                conteudo = file.readlines()  # Lê todas as linhas como uma lista
+                file.seek(0)
+                encontrado = False
+                
+                for i, linha in enumerate(conteudo):
+                    # Verifica se a linha contém o filme e '[ ]'
+                    if re.search(re.escape(self.filme), linha) and '[ ]' in linha:
+                        # Substitui '[ ]' por '[x]' na linha correspondente
+                        conteudo[i] = re.sub(r'\[ \]', '[x]', linha)
+                        encontrado = True
+                
+                if encontrado:
+                    # Sobrescreve o arquivo com o conteúdo atualizado
+                    file.writelines(conteudo)
+                    file.truncate()  # Garante que o arquivo seja truncado após a escrita
+                    print(f"Filme atualizado: {self.filme}")
+                else:
+                    print("O filme não foi encontrado ou já foi marcado como assistido.")
+        except Exception as e:
+            print(f"Erro ao atualizar o filme no arquivo: {str(e)}")
     def main(self):
         """Executa a lógica principal para verificar ou sortear um filme."""
         try:
@@ -74,7 +98,3 @@ class Filme:
             return f"O filme da vez:\n{re.sub(r'^\d{1,3}\.\s\[ \]\s', '', self.filme)}"
         except Exception as e:
             return f"Erro ao processar o arquivo do filme: {str(e)}"
-
-
-# Teste do código
-test = Filme()
