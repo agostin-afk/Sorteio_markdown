@@ -103,7 +103,7 @@ class Filme(FileManager):
                 # Sobrescreve o arquivo com o conteúdo atualizado
                 file.writelines(conteudo) #type: ignore
                 file.truncate()  #type: ignore
-                print(f"Filme atualizado: {self.filme}")
+                # print(f"Filme atualizado: {self.filme}")
                 self.close_path(file)
             else:
                 print("O filme não foi encontrado ou já foi marcado como assistido.")
